@@ -1,12 +1,9 @@
-package edu.uniritter.gpsapp;
+package edu.uniritter.gpsapp.views;
 
 import android.Manifest;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -14,20 +11,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class GPSActivity extends AppCompatActivity {
+import edu.uniritter.gpsapp.receiver.GPSBroadcastReceiver;
+import edu.uniritter.gpsapp.receiver.GPSService;
 
+public class GpsActivity extends AppCompatActivity {
+    GPSBroadcastReceiver receiver;
 
-    LocationBroadcastReceiver receiver;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        receiver = new LocationBroadcastReceiver();
-        if (Build.VERSION.SDK_INT >= 23) {
-            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-            } else {
-                startService();
-            }
+        receiver = new GPSBroadcastReceiver();
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         } else {
             startService();
         }
@@ -37,7 +32,7 @@ public class GPSActivity extends AppCompatActivity {
     void startService() {
         IntentFilter filter = new IntentFilter("Gps_Start");
         registerReceiver(receiver, filter);
-        Intent intent = new Intent(GPSActivity.this, LocationService.class);
+        Intent intent = new Intent(GpsActivity.this, GPSService.class);
         startService(intent);
     }
 
@@ -51,17 +46,6 @@ public class GPSActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(this, "Permissions necessary to continue", Toast.LENGTH_SHORT).show();
                 }
-        }
-    }
-
-    public class LocationBroadcastReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals("Gps_Start")){
-                double lat = intent.getDoubleExtra("Latitude", 0f);
-                double lng = intent.getDoubleExtra("Longitude", 0f);
-                Toast.makeText(GPSActivity.this, "Latitude is: " + lat + ", Longitude is: " + lng, Toast.LENGTH_SHORT).show();
-            }
         }
     }
 }

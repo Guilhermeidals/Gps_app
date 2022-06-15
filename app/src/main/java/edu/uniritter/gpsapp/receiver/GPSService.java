@@ -1,5 +1,6 @@
-package edu.uniritter.gpsapp;
+package edu.uniritter.gpsapp.receiver;
 
+import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
@@ -8,6 +9,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleService;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -15,7 +18,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 
-public class LocationService extends Service {
+public class GPSService extends LifecycleService {
     FusedLocationProviderClient fusedLocationProviderClient;
     LocationCallback locationCallback;
 
@@ -34,8 +37,8 @@ public class LocationService extends Service {
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 super.onLocationResult(locationResult);
-                Log.d("Teste", "Lat: "+ locationResult.getLastLocation().getLatitude() +
-                        ", Long: " + locationResult.getLastLocation().getLongitude());
+                //Log.d("Teste", "Lat: "+ locationResult.getLastLocation().getLatitude() +
+                    //    ", Long: " + locationResult.getLastLocation().getLongitude());
                 Intent intent = new Intent("Gps_Start");
                 intent.putExtra("Latitude", locationResult.getLastLocation().getLatitude());
                 intent.putExtra("Longitude", locationResult.getLastLocation().getLongitude());
@@ -49,6 +52,7 @@ public class LocationService extends Service {
         requestLocation();
         return super.onStartCommand(intent, flags, startId);
     }
+
 
     private void requestLocation() {
         LocationRequest locationRequest = new LocationRequest();

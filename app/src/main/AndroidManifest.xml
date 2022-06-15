@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="edu.uniritter.gpsapp">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -15,16 +16,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GpsApp"
-        tools:targetApi="31" >
-
-        <activity android:name=".GPSActivity"
+        tools:targetApi="31">
+        <activity
+            android:name=".views.MainActivity"
             android:exported="true">
             <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER"/>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".LocationService"/>
+        <activity
+            android:name=".views.GpsActivity"
+            android:exported="true">
+
+        </activity>
+
+        <service android:name=".receiver.GPSService" />
     </application>
 
 </manifest>
