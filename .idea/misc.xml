@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/lunas/Downloads/GpsApp/app/src/main/res/layout/activity_gps.xml" value="0.2953703703703704" />
         <entry key="..\:/Users/lunas/Downloads/GpsApp/app/src/main/res/layout/activity_main.xml" value="0.365625" />
+        <entry key="..\:/Users/lunas/Downloads/GpsApp/app/src/main/res/layout/location_layout.xml" value="0.2953703703703704" />
         <entry key="..\:/Users/lunas/Downloads/GpsApp/app/src/main/res/layout/map_activity.xml" value="0.25358649789029536" />
       </map>
     </option>

@@ -3,6 +3,7 @@ package edu.uniritter.gpsapp.receiver;
 import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;
+import android.location.Location;
 import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
@@ -17,11 +18,13 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.Task;
 
 public class GPSService extends LifecycleService {
     FusedLocationProviderClient fusedLocationProviderClient;
     LocationCallback locationCallback;
-
+    LocationRequest locationRequest = new LocationRequest();
+    Location lastLoc = null;
 
     @Nullable
     @Override
@@ -43,6 +46,20 @@ public class GPSService extends LifecycleService {
                 intent.putExtra("Latitude", locationResult.getLastLocation().getLatitude());
                 intent.putExtra("Longitude", locationResult.getLastLocation().getLongitude());
                 sendBroadcast(intent);
+
+                float distance = 0;
+                Location loc = locationResult.getLastLocation();
+                if(lastLoc != null) {
+                    distance = loc.distanceTo(lastLoc);
+                }else {
+                    lastLoc = loc;
+                }
+                Data.saveData(loc,distance);
+                Log.d("SaveData", "onLocationResult: teste");
+
+                if (distance > loc.getAccuracy()) {
+                    lastLoc = loc;
+                }
             }
         };
     }
@@ -51,11 +68,15 @@ public class GPSService extends LifecycleService {
     public int onStartCommand(Intent intent, int flags, int startId) {
         requestLocation();
         return super.onStartCommand(intent, flags, startId);
+
+
+//        Task<Void> voidTask = fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback)
+
     }
 
 
     private void requestLocation() {
-        LocationRequest locationRequest = new LocationRequest();
+
         locationRequest.setInterval(3000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
