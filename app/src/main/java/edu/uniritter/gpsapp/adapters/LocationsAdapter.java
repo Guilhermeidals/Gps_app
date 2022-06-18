@@ -23,8 +23,9 @@ public class LocationsAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ((TextView)holder.itemView.findViewById(R.id.TVLocation))
-            .setText("Location Latitude: "+ (Data.getLocData().getValue().get(position).getLatitude()
-                    + ". Longitude: " + (Data.getLocData().getValue().get(position).getLongitude())));
+            .setText("Location Latitude: "+ (Data.getLocData().getValue().get(position).getLatitude())
+                    + ". Longitude: " + (Data.getLocData().getValue().get(position).getLongitude()) + " Distance runned: "
+            + Data.getLocData().getValue().get(position).getAccuracy());
     }
 
     @Override

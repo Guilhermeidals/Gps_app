@@ -1,7 +1,5 @@
 package edu.uniritter.gpsapp.receiver;
 
-import android.annotation.SuppressLint;
-import android.app.Service;
 import android.content.Intent;
 import android.location.Location;
 import android.os.IBinder;
@@ -10,7 +8,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleService;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
