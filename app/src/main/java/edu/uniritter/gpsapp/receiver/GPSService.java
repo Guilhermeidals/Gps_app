@@ -21,7 +21,7 @@ public class GPSService extends LifecycleService {
     LocationCallback locationCallback;
     LocationRequest locationRequest = new LocationRequest();
     Location lastLoc = null;
-    private int updationTick = 10000;
+    private int updationTick = 30000;
 
 
     @Nullable
@@ -70,6 +70,7 @@ public class GPSService extends LifecycleService {
     private void requestLocation() {
 
         locationRequest.setInterval(updationTick);
+        locationRequest.setFastestInterval(updationTick);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
     }
