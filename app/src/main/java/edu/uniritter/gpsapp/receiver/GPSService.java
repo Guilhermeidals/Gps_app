@@ -15,13 +15,14 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.Task;
 
 public class GPSService extends LifecycleService {
     FusedLocationProviderClient fusedLocationProviderClient;
     LocationCallback locationCallback;
     LocationRequest locationRequest = new LocationRequest();
     Location lastLoc = null;
+    private int updationTick = 30000;
+
 
     @Nullable
     @Override
@@ -37,8 +38,6 @@ public class GPSService extends LifecycleService {
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 super.onLocationResult(locationResult);
-                //Log.d("Teste", "Lat: "+ locationResult.getLastLocation().getLatitude() +
-                    //    ", Long: " + locationResult.getLastLocation().getLongitude());
                 Intent intent = new Intent("Gps_Start");
                 intent.putExtra("Latitude", locationResult.getLastLocation().getLatitude());
                 intent.putExtra("Longitude", locationResult.getLastLocation().getLongitude());
@@ -65,17 +64,22 @@ public class GPSService extends LifecycleService {
     public int onStartCommand(Intent intent, int flags, int startId) {
         requestLocation();
         return super.onStartCommand(intent, flags, startId);
-
-
-//        Task<Void> voidTask = fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback)
-
     }
 
 
     private void requestLocation() {
 
-        locationRequest.setInterval(3000);
+        locationRequest.setInterval(updationTick);
+        locationRequest.setFastestInterval(updationTick);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper());
+    }
+
+    public int getUpdationTick() {
+        return updationTick;
+    }
+
+    public void setUpdationTick(int tick){
+        this.updationTick= tick;
     }
 }
