@@ -3,6 +3,7 @@ package edu.uniritter.gpsapp.views;
 import android.Manifest;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import java.util.List;
 
 import edu.uniritter.gpsapp.R;
 import edu.uniritter.gpsapp.adapters.LocationsAdapter;
+import edu.uniritter.gpsapp.models.Login;
 import edu.uniritter.gpsapp.receiver.Data;
 import edu.uniritter.gpsapp.receiver.GPSBroadcastReceiver;
 import edu.uniritter.gpsapp.receiver.GPSService;
@@ -49,6 +51,16 @@ public class GpsActivity extends AppCompatActivity {
                 adapter.refresh();
             }
         });
+
+        SharedPreferences preferences = getSharedPreferences("USER_LOGGED", MODE_PRIVATE);
+        String USER = preferences.getString("USER_LOGGED", null);
+
+        if (USER.equals("admin")){
+
+        }
+        else if (USER.equals("operator")){
+
+        }
     }
 
 

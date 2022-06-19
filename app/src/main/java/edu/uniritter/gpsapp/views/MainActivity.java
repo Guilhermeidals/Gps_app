@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         login.setUser(user.getText().toString());
         login.setPassword(password.getText().toString());
 
-        if (login.Validate() == false){
+        if (login.Validate(this) == false){
             WarningMessage("Usuário ou senha incorretos!");
         }
         else{

@@ -1,5 +1,8 @@
 package edu.uniritter.gpsapp.models;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,12 +34,12 @@ public class Login {
         Password = password;
     }
 
+    public String getUserLogged(){ return USER_LOGGED; }
+
     public Login(){
-        USERS.put("admin", "admin123");
-        USERS.put("operator", "operator123");
     }
 
-    public boolean Validate(){
+    public boolean Validate(Context context){
 
         if (User.equals("") || Password.equals(""))
             return false;
@@ -45,8 +48,18 @@ public class Login {
         if(!(Password.equals(USERS.get(User))))
             return false;
 
-        USER_LOGGED = User;
+        SaveUser(context, User);
+
         return true;
+    }
+
+    public  void SaveUser(Context context, String user){
+        SharedPreferences preferences =  context.getSharedPreferences("USER_LOGGED", Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("USER_LOGGED", User);
+        editor.commit();
+
     }
 }
 
