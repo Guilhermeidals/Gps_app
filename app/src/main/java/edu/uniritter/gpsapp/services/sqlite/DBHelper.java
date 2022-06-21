@@ -1,4 +1,4 @@
-package edu.uniritter.gpsapp.sqlite;
+package edu.uniritter.gpsapp.services.sqlite;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,7 +14,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db){
-        String sql = "create table LocationData(id integer primary key, date long, bool isSended);";
+        String sql = "CREATE TABLE LocationData(id INTEGER PRIMARY KEY, longitude REAL, latitude REAL, date DATETIME, isSended BOOL);";
         db.execSQL(sql);
     }
 
