@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "783446500432",
+    "firebase_url": "https://androidstudio-f369a-default-rtdb.firebaseio.com",
+    "project_id": "androidstudio-f369a",
+    "storage_bucket": "androidstudio-f369a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:783446500432:android:9a5930f9177ac3b2af9d55",
+        "android_client_info": {
+          "package_name": "edu.uniritter.strava20"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "783446500432-qtndhaspfa9rorpsq2a7lkdfbfgsj42p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1SeK0zHt4XTcYx-vSSs43X8fAm9PeMB0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "783446500432-qtndhaspfa9rorpsq2a7lkdfbfgsj42p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

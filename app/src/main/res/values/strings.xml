@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Strava2.0</string>
+    <string name="Enter">Entrar</string>
+    <string name="User">Usuário</string>
+    <string name="Password">Senha</string>
+    <string name="Save">Salvar</string>
+    <string name="Config">Configurações</string>
+    <string name="ColectInterval">Intervalo de coleta:</string>
+    <string name="displacementType">Tipo de Deslocamento:</string>
+    <string-array name="displacementTypes">
+        <item>caminhando</item>
+        <item>dirigindo</item>
+    </string-array>
+    <string name="SaveStop">Salvar localização no estado parado</string>
+</resources>
