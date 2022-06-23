@@ -59,7 +59,6 @@ public class Login {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("USER_LOGGED", User);
         editor.commit();
-
     }
 }
 

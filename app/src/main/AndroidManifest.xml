@@ -4,7 +4,7 @@
     package="edu.uniritter.gpsapp">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -18,18 +18,20 @@
         android:theme="@style/Theme.GpsApp"
         tools:targetApi="31">
         <activity
+            android:name=".ConfigActivity"
+            android:exported="false" />
+        <activity
             android:name=".views.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".views.GpsActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
 
         <service android:name=".receiver.GPSService" />
     </application>
