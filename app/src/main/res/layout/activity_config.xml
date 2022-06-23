@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.ConfigActivity">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="100px"
+        android:text="@string/Config"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    <TextView
+        android:id="@+id/intervalTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ColectInterval"
+        android:layout_marginTop="100px"
+        android:layout_marginLeft="30px"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+    <TextView
+        android:id="@+id/Interval"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3"
+        android:layout_marginLeft="30px"
+        android:layout_marginTop="20px"
+        app:layout_constraintTop_toBottomOf="@id/intervalTitle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/seconds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="s"
+
+        android:layout_marginTop="20px"
+        app:layout_constraintTop_toBottomOf="@+id/intervalTitle"
+        app:layout_constraintLeft_toRightOf="@+id/Interval"
+        />
+
+    <Button
+        android:id="@+id/lessButton"
+        android:layout_width="36dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="5px"
+        android:layout_marginLeft="20px"
+        android:text="-"
+        android:textSize="20px"
+        android:textAlignment="center"
+        app:layout_constraintLeft_toRightOf="@id/seconds"
+        app:layout_constraintTop_toBottomOf="@id/intervalTitle"
+        android:onClick="Less"/>
+    <Button
+        android:layout_width="36dp"
+        android:layout_height="30dp"
+        android:layout_margin="5px"
+        android:text="+"
+        android:textSize="20px"
+        android:textAlignment="center"
+        app:layout_constraintLeft_toRightOf="@id/lessButton"
+        app:layout_constraintTop_toBottomOf="@id/intervalTitle"
+        android:onClick="More"/>
+
+    <TextView
+        android:id="@+id/displacementTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/displacementType"
+        android:layout_marginTop="100px"
+        android:layout_marginLeft="30px"
+        app:layout_constraintTop_toBottomOf="@id/intervalTitle"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <Spinner
+        android:id="@+id/displacementTypes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20px"
+        android:layout_marginLeft="30px"
+        app:layout_constraintTop_toBottomOf="@id/displacementTitle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/stopTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/SaveStop"
+        android:layout_marginTop="100px"
+        android:layout_marginLeft="30px"
+        app:layout_constraintTop_toBottomOf="@+id/displacementTitle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+    <CheckBox
+        android:id="@+id/SaveStopBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20px"
+        android:layout_marginLeft="30px"
+        app:layout_constraintTop_toBottomOf="@+id/stopTitle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+    <Button
+        android:id="@+id/SaveConfig"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100px"
+        android:layout_marginLeft="30px"
+        android:text="@string/Save"
+        app:layout_constraintTop_toBottomOf="@+id/SaveStopBox"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:onClick="Save"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

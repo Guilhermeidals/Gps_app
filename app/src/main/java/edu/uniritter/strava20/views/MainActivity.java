@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                     GpsService.newLocationRequest(180000);
                 } else {
                     GpsService.stopLocationRequest();
-//                    ConfigService.SetInterval(getApplicationContext(), 3000);
+                    ConfigService.SetInterval(getApplicationContext(), 3000);
                     GpsService.newLocationRequest(3000);
 
                 }
