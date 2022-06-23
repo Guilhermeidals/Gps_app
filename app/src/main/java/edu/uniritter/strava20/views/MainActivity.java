@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(MainActivity.this, "Botao não faz nada ainda", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, ConfigActivity.class));
 //                Intent startIntent = new Intent();
 //                startIntent.setAction("edu.uniritter.strava20.Gps_Start");
 //                getApplicationContext().sendBroadcast(startIntent);
