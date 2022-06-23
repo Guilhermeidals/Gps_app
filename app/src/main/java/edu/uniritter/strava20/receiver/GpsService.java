@@ -109,6 +109,7 @@ public class GpsService extends LifecycleService {
                 }else{
                     lastLocation = location;
                 }
+
                 Data.saveData(location,distance);
                 if (distance > location.getAccuracy()) {
                     lastLocation = location;

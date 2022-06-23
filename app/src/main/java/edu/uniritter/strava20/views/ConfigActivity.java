@@ -29,7 +29,7 @@ public class ConfigActivity extends AppCompatActivity {
 
         intervalEditText = (TextView) findViewById(R.id.Interval);
         Interval = ConfigService.GetInterval(this);
-        intervalEditText.setText(Interval);
+        intervalEditText.setText(""+Interval);
 
         DisplacementSpinner = (Spinner) findViewById(R.id.displacementTypes);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -44,14 +44,14 @@ public class ConfigActivity extends AppCompatActivity {
     public void Less(View view){
         if (Interval > 3){
             Interval -= 1;
-            intervalEditText.setText(Interval);
+            intervalEditText.setText(""+Interval);
         }
     }
 
     public void More(View view){
         if (Interval < 180){
             Interval += 1;
-            intervalEditText.setText(Interval);
+            intervalEditText.setText(""+Interval);
         }
     }
 

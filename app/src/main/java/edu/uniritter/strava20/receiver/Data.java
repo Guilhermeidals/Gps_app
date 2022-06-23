@@ -32,30 +32,7 @@ public class Data {
         Data.locData.getValue().add(location);
         locData.setValue(locData.getValue());
 
-        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-        CollectionReference collectionReference = firebaseFirestore.collection("Locations");
-        GeoPoint geoPoint = new GeoPoint(location.getLatitude(), location.getLongitude());
-        collectionReference.document(String.valueOf(Calendar.getInstance().getTime())).set(new Locations(geoPoint)).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Log.d("firestore", "onSuccess: Foi");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d("firestore", "onFailure: Não Foi");
-            }
-        });
     }
 }
 
-class Locations {
-    public GeoPoint location;
-    public Date date;
 
-    public Locations(GeoPoint location){
-        this.location = location;
-        this.date = Calendar.getInstance().getTime();
-
-    }
-}

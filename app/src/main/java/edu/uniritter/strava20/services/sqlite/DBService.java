@@ -34,6 +34,7 @@ public class DBService {
         Cursor cursor = db.rawQuery("SELECT * FROM LocationData WHERE isSended = false", null);
 
         List<Location> locations = CursorToLocations(cursor);
+        //change all isSended to Sending
 
         return locations;
     }
