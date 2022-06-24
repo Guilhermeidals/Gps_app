@@ -104,12 +104,13 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(this, "Somente durante o uso", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(this, "Localização não autorizada", Toast.LENGTH_SHORT).show();
+
                             }
                         });
 
         permissionRequest.launch(new String[] {
-                Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_BACKGROUND_LOCATION
         });
     }
