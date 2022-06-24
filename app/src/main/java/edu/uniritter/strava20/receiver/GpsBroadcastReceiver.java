@@ -8,11 +8,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-public class GpsBroadcasReceiver extends BroadcastReceiver {
+public class GpsBroadcastReceiver extends BroadcastReceiver {
     private GpsService gpsService;
     private NotificationChannel gpsChannel;
 
-    public GpsBroadcasReceiver() {
+    public GpsBroadcastReceiver() {
         gpsChannel = new NotificationChannel("Gps","Canal do Gps", NotificationManager.IMPORTANCE_LOW);
     }
 

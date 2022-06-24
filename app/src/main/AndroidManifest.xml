@@ -19,6 +19,27 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Strava20"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAqtDq9hEGiNzLKejx24_3O0vEcOxoEeKg" />
+        <receiver
+            android:name="edu.uniritter.strava20.receiver.GpsBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.BOOT_COMPLETED" />
+
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+        <intent-filter>
+            <action android:name="android.intent.action.AIRPLANE_MODE" />
+        </intent-filter>
+        <intent-filter>
+            <action android:name="br.edu.uniritter.GPS_START" />
+        </intent-filter>
+        </receiver>
+
         <activity
             android:name=".views.AppDataActivity"
             android:exported="false" />
@@ -38,7 +59,9 @@
             android:name=".views.ConfigActivity"
             android:exported="true"></activity>
 
-        <service android:name=".receiver.GpsService" />
+        <service android:name=".receiver.GpsService"
+                 android:exported="true"
+                 android:foregroundServiceType="location"/>
     </application>
 
 </manifest>

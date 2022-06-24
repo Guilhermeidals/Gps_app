@@ -2,6 +2,7 @@ package edu.uniritter.strava20.views;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -9,19 +10,27 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
-import android.telephony.CarrierConfigManager;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.Switch;
 import android.widget.Toast;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CircleOptions;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.List;
 
@@ -29,12 +38,13 @@ import edu.uniritter.strava20.R;
 import edu.uniritter.strava20.adapters.LocationsAdapter;
 import edu.uniritter.strava20.adapters.LocationsViewModel;
 import edu.uniritter.strava20.receiver.Data;
-import edu.uniritter.strava20.receiver.GpsBroadcasReceiver;
-import edu.uniritter.strava20.receiver.GpsService;
-import edu.uniritter.strava20.services.config.ConfigService;
+import edu.uniritter.strava20.receiver.GpsBroadcastReceiver;
+import edu.uniritter.strava20.receiver.Locations;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
     BroadcastReceiver broadcastReceiver;
+    private SupportMapFragment mapFragment;
+    private GoogleMap googleMap;
 
     private Button DataButton;
 
@@ -45,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         DataButton = findViewById(R.id.DataButton);
         requestPermissions();
 
-        broadcastReceiver = new GpsBroadcasReceiver();
+        broadcastReceiver = new GpsBroadcastReceiver();
         IntentFilter startFilter = new IntentFilter("edu.uniritter.strava20.Gps_Start");
         IntentFilter bootFilter = new IntentFilter("android.intent.action.BOOT_COMPLETED");
         registerReceiver(broadcastReceiver, startFilter);
@@ -59,17 +69,6 @@ public class MainActivity extends AppCompatActivity {
         }else if (USER.equals("operator")){
             DataButton.setVisibility(View.INVISIBLE);
         }
-        Button button = findViewById(R.id.button2);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Botao não faz nada ainda", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(MainActivity.this, ConfigActivity.class));
-//                Intent startIntent = new Intent();
-//                startIntent.setAction("edu.uniritter.strava20.Gps_Start");
-//                getApplicationContext().sendBroadcast(startIntent);
-            }
-        });
 
         Intent startIntent = new Intent();
         startIntent.setAction("edu.uniritter.strava20.Gps_Start");
@@ -77,8 +76,11 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView rvLocation =  findViewById(R.id.rvLocations);
         LocationsAdapter locAdapter =  new LocationsAdapter();
-        rvLocation.setLayoutManager( new LinearLayoutManager(this));
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setStackFromEnd(true);
+        rvLocation.setLayoutManager(llm);
         rvLocation.setAdapter(locAdapter);
+
 
         LocationsViewModel viewmodel = new ViewModelProvider(this).get(LocationsViewModel.class);
         Data.getLocData().observe(this,
@@ -90,6 +92,9 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
+        mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map2);
+        mapFragment.getMapAsync(this);
     }
 
     public void requestPermissions() {
@@ -127,5 +132,47 @@ public class MainActivity extends AppCompatActivity {
 
     public void GoToData(View view){
         startActivity(new Intent(MainActivity.this, AppDataActivity.class));
+    }
+
+    @SuppressLint("MissingPermission")
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        this.googleMap = googleMap;
+        googleMap.setBuildingsEnabled(true);
+        googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        googleMap.setIndoorEnabled(true);
+        googleMap.setMyLocationEnabled(true);
+        Data.getLocData().observe(this,
+                new Observer<List<Location>>() {
+                    @Override
+                    public void onChanged(List<Location> locations) {
+                        if (locations.size() > 0) {
+                            onNewPoint(locations);
+                        }
+                    }
+                });
+    }
+    private void onNewPoint(List<Location> locs) {
+        googleMap.clear();
+        LatLng lastPonto = null;
+        PolylineOptions plo = new PolylineOptions();
+        for (Location loc : locs) {
+            LatLng ponto = new LatLng(loc.getLatitude(), loc.getLongitude());
+            googleMap.addCircle(new CircleOptions()
+                    .center(ponto)
+                    .radius(loc.getAccuracy())
+                    .strokeColor(Color.RED)
+                    .strokeWidth(1));
+            int veloc = (int) (loc.getSpeed()*10);
+            googleMap.addMarker(new MarkerOptions()
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.dot))
+                    .position(ponto)
+                    .title("+/- "+loc.getAccuracy()+"m  "+(veloc/10.0)+"m/s"));
+            plo.add(ponto);
+
+            lastPonto = ponto;
+        }
+        googleMap.addPolyline(plo);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(lastPonto));
     }
 }
