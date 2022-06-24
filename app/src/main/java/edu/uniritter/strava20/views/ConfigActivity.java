@@ -1,5 +1,6 @@
 package edu.uniritter.strava20.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -59,5 +60,6 @@ public class ConfigActivity extends AppCompatActivity {
         ConfigService.SetInterval(this, Integer.parseInt(intervalEditText.getText().toString()));
         ConfigService.SetDisplacement(this, DisplacementSpinner.getSelectedItem().toString());
         ConfigService.SetSaveStop(this, SaveStopCheckBox.isChecked());
+        startActivity(new Intent(ConfigActivity.this, MainActivity.class));
     }
 }

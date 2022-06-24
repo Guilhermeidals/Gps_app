@@ -7,7 +7,7 @@ public class ConfigService {
 
     public static int GetInterval(Context context){
         SharedPreferences preferences = context.getSharedPreferences("INTERVAL", Context.MODE_PRIVATE);
-        int interval = preferences.getInt("INVERVAL", 0);
+        int interval = preferences.getInt("INTERVAL", 0);
 
         if (interval == 0){
             SharedPreferences.Editor editor = preferences.edit();

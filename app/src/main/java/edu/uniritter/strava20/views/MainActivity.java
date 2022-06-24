@@ -133,4 +133,8 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         unregisterReceiver(broadcastReceiver);
     }
+
+    public void GoToConfig(View view){
+        startActivity(new Intent(MainActivity.this, ConfigActivity.class));
+    }
 }
