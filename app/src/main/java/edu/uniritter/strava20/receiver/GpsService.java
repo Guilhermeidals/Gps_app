@@ -107,18 +107,27 @@ public class GpsService extends LifecycleService {
                 float distance = 0;
                 Location location = locationResult.getLastLocation();
                 Log.d("tag", "onLocationResult: loc"+location);
-                if(lastLocation != null) {
-                    distance = location.distanceTo(lastLocation);
-                }else{
-                    lastLocation = location;
-                    Data.saveData(location,distance);
-                }
-                if (distance > location.getAccuracy()) {
-                    lastLocation = location;
-                    Data.saveData(location,distance);
-                }
+                teste(distance, location);
             }
         }, null);
+    }
+
+    private static void teste(float distance, Location location) {
+        if(lastLocation != null) {
+            distance = location.distanceTo(lastLocation);
+        }else{
+            lastLocation = location;
+            Data.saveData(location, distance);
+        }
+        if (ConfigService.GetSaveStop(locationProviderClient.getApplicationContext()) == true){
+                lastLocation = location;
+                Data.saveData(location, distance);
+        }else if (ConfigService.GetSaveStop(locationProviderClient.getApplicationContext()) == false){
+            if (distance > location.getAccuracy()) {
+                lastLocation = location;
+                Data.saveData(location, distance);
+            }
+        }
     }
 
     public static void stopLocationRequest() {

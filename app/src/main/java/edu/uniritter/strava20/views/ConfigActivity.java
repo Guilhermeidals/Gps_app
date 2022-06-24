@@ -1,7 +1,7 @@
 package edu.uniritter.strava20.views;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import edu.uniritter.strava20.R;
+import edu.uniritter.strava20.receiver.GpsService;
 import edu.uniritter.strava20.services.config.ConfigService;
 
 public class ConfigActivity extends AppCompatActivity {
@@ -60,6 +61,13 @@ public class ConfigActivity extends AppCompatActivity {
         ConfigService.SetInterval(this, Integer.parseInt(intervalEditText.getText().toString()));
         ConfigService.SetDisplacement(this, DisplacementSpinner.getSelectedItem().toString());
         ConfigService.SetSaveStop(this, SaveStopCheckBox.isChecked());
-        startActivity(new Intent(ConfigActivity.this, MainActivity.class));
+        GpsService.stopLocationRequest();
+        GpsService.newLocationRequest(ConfigService.GetInterval(this)*1000);
+        if (ConfigService.GetDisplacement(this).toString().equals("dirigindo")) {
+            Log.d("teste", "Save: "+ConfigService.GetDisplacement(this).toString());
+            GpsService.stopLocationRequest();
+            ConfigService.SetInterval(this,180);
+            GpsService.newLocationRequest(ConfigService.GetInterval(this)*1000);
+        }
     }
 }
