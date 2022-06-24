@@ -1,6 +1,5 @@
 package edu.uniritter.strava20.services.sqlite;
 
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.icu.util.Calendar;
 import android.location.Location;

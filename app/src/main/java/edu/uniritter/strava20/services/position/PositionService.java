@@ -18,7 +18,8 @@ public class PositionService {
             FirebaseDB fb = new FirebaseDB();
             fb.SaveData(location);
         }
-        else if (dbType.equals("SQLite")){
+
+        else if (dbType.equals("SQLite")) {
             db = new DBService(context);
             db.createNewLocation(longitude, latitude, LocalDateTime.now());
         }

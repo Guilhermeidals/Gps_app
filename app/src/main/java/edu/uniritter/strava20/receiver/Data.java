@@ -17,7 +17,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import edu.uniritter.strava20.services.position.PositionService;
+
 public class Data {
+    public static int distance = 0;
     private static MutableLiveData<List<Location>> locData = new MutableLiveData<>();
 
     public static MutableLiveData<List<Location>> getLocData() {
@@ -27,11 +30,10 @@ public class Data {
         return locData;
     }
 
-    public static void saveData(Location location, float distance) {
-        int dist = (int) distance;
+    public static void saveData(Location location, float dist) {
+        distance += (int) dist;
         Data.locData.getValue().add(location);
         locData.setValue(locData.getValue());
-
     }
 }
 
