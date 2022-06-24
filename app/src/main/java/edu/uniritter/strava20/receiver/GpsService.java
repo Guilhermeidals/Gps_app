@@ -27,6 +27,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import edu.uniritter.strava20.services.config.ConfigService;
+import edu.uniritter.strava20.services.position.PositionService;
+import edu.uniritter.strava20.services.sqlite.DBService;
 import edu.uniritter.strava20.views.MainActivity;
 
 public class GpsService extends LifecycleService {
@@ -38,6 +40,7 @@ public class GpsService extends LifecycleService {
     private NotificationChannel notificationChannel;
     static LocationRequest locationRequest;
 
+    @SuppressLint("MissingSuperCall")
     @Nullable
     @Override
     public IBinder onBind(@NonNull Intent intent) {
@@ -78,7 +81,7 @@ public class GpsService extends LifecycleService {
     public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
         locationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        newLocationRequest(3000);
+        newLocationRequest(ConfigService.GetInterval(this)*1000);
         if (intent == null){
             return START_NOT_STICKY;
         }
@@ -108,11 +111,11 @@ public class GpsService extends LifecycleService {
                     distance = location.distanceTo(lastLocation);
                 }else{
                     lastLocation = location;
+                    Data.saveData(location,distance);
                 }
-
-                Data.saveData(location,distance);
                 if (distance > location.getAccuracy()) {
                     lastLocation = location;
+                    Data.saveData(location,distance);
                 }
             }
         }, null);
