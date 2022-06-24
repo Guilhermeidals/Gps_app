@@ -152,6 +152,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }
                 });
     }
+
     private void onNewPoint(List<Location> locs) {
         googleMap.clear();
         LatLng lastPonto = null;
@@ -165,9 +166,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     .strokeWidth(1));
             int veloc = (int) (loc.getSpeed()*10);
             googleMap.addMarker(new MarkerOptions()
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.dot))
-                    .position(ponto)
-                    .title("+/- "+loc.getAccuracy()+"m  "+(veloc/10.0)+"m/s"));
+//                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.dot))
+                    .position(ponto));
+//                    .title("+/- "+loc.getAccuracy()+"m  "+(veloc/10.0)+"m/s"));
             plo.add(ponto);
 
             lastPonto = ponto;

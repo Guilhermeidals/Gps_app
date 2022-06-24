@@ -24,7 +24,7 @@ public class LocationsAdapter extends RecyclerView.Adapter {
         ((TextView)holder.itemView.findViewById(R.id.TVLocation))
             .setText("Location Latitude: "+ (Data.getLocData().getValue().get(position).getLatitude())
                     + ". Longitude: " + (Data.getLocData().getValue().get(position).getLongitude()) + " Distance: "
-            + Data.distance);
+            + Data.distance+" Metros percorridos");
     }
 
     @Override
