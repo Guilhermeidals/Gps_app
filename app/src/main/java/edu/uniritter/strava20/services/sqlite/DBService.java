@@ -16,6 +16,7 @@ public class DBService {
 
     public DBService(Context context) {
         dbHelper = new DBHelper(context);
+        db = dbHelper.getWritableDatabase();
     }
 
     public void createNewLocation(double longitude, double latitude, LocalDateTime DateTime) {
@@ -34,11 +35,23 @@ public class DBService {
     public List<Location> getAllNotSendedLocations(){
         Cursor cursor = db.rawQuery("SELECT * FROM LocationData WHERE isSended = false", null);
 
+        if (cursor.moveToFirst()) {
+            do {
+                UpdateLocationSendingStatus(cursor.getInt(0));
+            } while (cursor.moveToNext());
+        }
         List<Location> locations = CursorToLocations(cursor);
-        //change all isSended to Sending
 
         return locations;
     }
+
+    public void UpdateLocationSendingStatus(int id){
+        ContentValues cv = new ContentValues();
+        cv.put("isSended", true);
+
+        db.update("LocationData", cv, "id = ", new String[]{String.valueOf(id)});
+    }
+
 
     public void UpdateDistance(double distance){
 
@@ -113,7 +126,7 @@ public class DBService {
         if (cursor.moveToFirst()){
             do{
 
-                valor = cursor.getDouble(1);
+                valor =  Double.parseDouble(cursor.getString(0));
 
             } while (cursor.moveToNext());
         }

@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        DataButton = findViewById(R.id.GoToData);
+        DataButton = findViewById(R.id.DataButton);
         requestPermissions();
 
         broadcastReceiver = new GpsBroadcasReceiver();

@@ -20,7 +20,7 @@
         android:theme="@style/Theme.Strava20"
         tools:targetApi="31">
         <activity
-            android:name=".AppDataActivity"
+            android:name=".views.AppDataActivity"
             android:exported="false" />
         <activity
             android:name=".views.LoginActivity"

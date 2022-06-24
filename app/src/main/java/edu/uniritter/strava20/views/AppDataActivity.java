@@ -19,17 +19,16 @@ public class AppDataActivity extends AppCompatActivity {
     private TextView distanceText;
     private TextView movingTimeText;
     private TextView downtimeText;
-    private DBService db = new DBService(this);
+    private DBService db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_data);
-
-
         InitializeObjects();
     }
 
     private void InitializeObjects(){
+        db = new DBService(this);
         distanceText = (TextView) findViewById(R.id.distanceData);
         double distance = db.GetDistance();
         distanceText.setText(Double.toString(distance));
