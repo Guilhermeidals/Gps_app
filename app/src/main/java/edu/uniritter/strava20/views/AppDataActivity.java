@@ -31,14 +31,14 @@ public class AppDataActivity extends AppCompatActivity {
         db = new DBService(this);
         distanceText = (TextView) findViewById(R.id.distanceData);
         double distance = db.GetDistance();
-        distanceText.setText(Double.toString(distance));
+        distanceText.setText(""+Double.toString(distance));
 
         movingTimeText = findViewById(R.id.movimentTimeData);
         double movingTime = db.GetTimeMoving();
-        movingTimeText.setText(Double.toString(movingTime));
+        movingTimeText.setText(""+Double.toString(movingTime));
 
         downtimeText = findViewById(R.id.dowtimeData);
         double downtime = db.GetDowntime();
-        downtimeText.setText(Double.toString(downtime));
+        downtimeText.setText(""+Double.toString(downtime));
     }
 }

@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -23,13 +22,17 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.type.Date;
+import com.google.type.DateTime;
+
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import edu.uniritter.strava20.services.config.ConfigService;
-import edu.uniritter.strava20.services.position.PositionService;
 import edu.uniritter.strava20.services.sqlite.DBService;
-import edu.uniritter.strava20.views.MainActivity;
 
 public class GpsService extends LifecycleService {
 
@@ -39,6 +42,8 @@ public class GpsService extends LifecycleService {
     private static Location lastLocation = null;
     private NotificationChannel notificationChannel;
     static LocationRequest locationRequest;
+
+
 
     @SuppressLint("MissingSuperCall")
     @Nullable
@@ -107,25 +112,26 @@ public class GpsService extends LifecycleService {
                 float distance = 0;
                 Location location = locationResult.getLastLocation();
                 Log.d("tag", "onLocationResult: loc"+location);
-                teste(distance, location);
+                StoppedLocations(distance, location);
             }
         }, null);
     }
 
-    private static void teste(float distance, Location location) {
+    private static void StoppedLocations(float distance, Location location) {
+        DBService db = null;
         if(lastLocation != null) {
             distance = location.distanceTo(lastLocation);
         }else{
             lastLocation = location;
-            Data.saveData(location, distance);
+            Data.saveData(location, distance, locationProviderClient.getApplicationContext());
         }
         if (ConfigService.GetSaveStop(locationProviderClient.getApplicationContext()) == true){
                 lastLocation = location;
-                Data.saveData(location, distance);
+                Data.saveData(location, distance, locationProviderClient.getApplicationContext());
         }else if (ConfigService.GetSaveStop(locationProviderClient.getApplicationContext()) == false){
             if (distance > location.getAccuracy()) {
                 lastLocation = location;
-                Data.saveData(location, distance);
+                Data.saveData(location, distance, locationProviderClient.getApplicationContext());
             }
         }
     }

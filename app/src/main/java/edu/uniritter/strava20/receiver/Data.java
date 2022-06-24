@@ -1,5 +1,6 @@
 package edu.uniritter.strava20.receiver;
 
+import android.content.Context;
 import android.icu.util.Calendar;
 import android.location.Location;
 import android.util.Log;
@@ -30,10 +31,13 @@ public class Data {
         return locData;
     }
 
-    public static void saveData(Location location, float dist) {
+    public static void saveData(Location location, float dist, Context context) {
         distance += (int) dist;
         Data.locData.getValue().add(location);
         locData.setValue(locData.getValue());
+        PositionService positionService = new PositionService();
+        positionService.saveData(location,dist,"SQLITE", context);
+
     }
 }
 

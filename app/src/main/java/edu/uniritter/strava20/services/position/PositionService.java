@@ -10,7 +10,7 @@ import edu.uniritter.strava20.services.sqlite.FirebaseDB;
 public class PositionService {
     private DBService db;
 
-    public void saveData(Location location, String dbType, Context context){
+    public void saveData(Location location, double distance, String dbType, Context context){
         double latitude = location.getLatitude();
         double longitude = location.getLongitude();
 
@@ -22,6 +22,7 @@ public class PositionService {
         else if (dbType.equals("SQLite")) {
             db = new DBService(context);
             db.createNewLocation(longitude, latitude, LocalDateTime.now());
+            db.UpdateDistance(distance);
         }
     }
 }
