@@ -12,4 +12,8 @@
         <item>dirigindo</item>
     </string-array>
     <string name="SaveStop">Salvar localização no estado parado</string>
+    <string name="Data">Dados</string>
+    <string name="distance">Distancia Percorrida:</string>
+    <string name="timeMoving">Tempo de deslocamento:</string>
+    <string name="downtime">Tempo de imobilidade:</string>
 </resources>

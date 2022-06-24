@@ -44,7 +44,17 @@
         android:layout_marginBottom="16dp"
         android:text="Map"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
         app:layout_constraintStart_toStartOf="parent" />
+    <Button
+        android:id="@+id/GoToData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="20px"
+        android:text="@string/Data"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/ConfigButton"
+        android:onClick="GoToData"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

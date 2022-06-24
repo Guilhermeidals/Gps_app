@@ -36,11 +36,13 @@ import edu.uniritter.strava20.services.config.ConfigService;
 public class MainActivity extends AppCompatActivity {
     BroadcastReceiver broadcastReceiver;
 
+    private Button DataButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        DataButton = findViewById(R.id.GoToData);
         requestPermissions();
 
         broadcastReceiver = new GpsBroadcasReceiver();
@@ -53,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
         String USER = preferences.getString("USER_LOGGED", null);
 
         if (USER.equals("admin")) {
-
+            DataButton.setVisibility(View.VISIBLE);
         }else if (USER.equals("operator")){
-
+            DataButton.setVisibility(View.INVISIBLE);
         }
         Button button = findViewById(R.id.button2);
         button.setOnClickListener(new View.OnClickListener() {
@@ -66,22 +68,6 @@ public class MainActivity extends AppCompatActivity {
 //                Intent startIntent = new Intent();
 //                startIntent.setAction("edu.uniritter.strava20.Gps_Start");
 //                getApplicationContext().sendBroadcast(startIntent);
-            }
-        });
-
-        Switch toggle = (Switch) findViewById(R.id.switch1);
-        toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    GpsService.stopLocationRequest();
-//                    ConfigService.SetInterval(getApplicationContext(), 180000);
-                    GpsService.newLocationRequest(180000);
-                } else {
-                    GpsService.stopLocationRequest();
-                    ConfigService.SetInterval(getApplicationContext(), 3000);
-                    GpsService.newLocationRequest(3000);
-
-                }
             }
         });
 
@@ -136,5 +122,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void GoToConfig(View view){
         startActivity(new Intent(MainActivity.this, ConfigActivity.class));
+    }
+
+    public void GoToData(View view){
+        startActivity(new Intent(MainActivity.this, AppDataActivity.class));
     }
 }
